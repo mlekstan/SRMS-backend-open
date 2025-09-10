@@ -6,10 +6,10 @@ import { Client } from "./interfaces/client.interface";
 export class ClientsService {
   private readonly clients: Client[] = [];
 
-  create(client: Client) {
+  add(client: Client) {
     this.clients.push(client);
     console.log("Added:", client)
-    console.log("Base:", this.clients)
+    console.log("ClientsBase:", this.clients)
     return client
   }
 }
