@@ -1,15 +1,15 @@
 import { Body, Controller, Post, Req } from "@nestjs/common";
 import { ClientsService } from "./clients.service";
-import { CreateClientDto } from "./dto/create-client.dto";
+import { AddClientDto } from "./dto/add-client.dto";
 
 
 @Controller("clients")
 export class ClientsController {
-  constructor(private clientService: ClientsService) {}
+  constructor(private clientsService: ClientsService) {}
 
 
   @Post("add")
-  add(@Body() createClientDto: CreateClientDto) {
-    return this.clientService.add(createClientDto);
+  add(@Body() addClientDto: AddClientDto) {
+    return this.clientsService.add(addClientDto);
   }
 }

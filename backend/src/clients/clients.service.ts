@@ -8,7 +8,6 @@ export class ClientsService {
 
   add(client: Client) {
     this.clients.push(client);
-    console.log("Added:", client)
     console.log("ClientsBase:", this.clients)
     return client
   }
