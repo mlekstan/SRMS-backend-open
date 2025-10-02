@@ -1,4 +1,4 @@
-export interface Client {
+export interface ClientIface {
   cardData: { cardBarcode: string };
   contactData: { areaCode: string, email: string, phoneNumber: string };
   personalData: { firstName: string, identityCardNumber: string, lastName: string, secondName: string};
