@@ -1,14 +1,30 @@
 import { Injectable } from "@nestjs/common";
-import { Card } from "./interfaces/card.interface";
+import { Repository } from "typeorm";
+import { Card } from "./card.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CardIface } from "./interfaces/card.interface";
+import { copyToRow } from "src/helper-functions/copyToRow";
 
 
 @Injectable()
 export class CardsService {
-  private cards: Card[] = []
+  private cardsRepository: Repository<Card>
 
-  add(card: Card) {
-    this.cards.push(card);
-    console.log("CardsBase:", this.cards);
-    return card;
+  constructor( @InjectRepository(Card) cardsRepository: Repository<Card> ) {
+    this.cardsRepository = cardsRepository;
+  }
+
+  async add(card: CardIface) {
+    try {
+      const cardRow = new Card();
+
+      copyToRow(cardRow, card);
+      this.cardsRepository.save(cardRow);
+
+      return card;
+    } 
+    catch(error) {
+      throw error;
+    }
   }
 }
