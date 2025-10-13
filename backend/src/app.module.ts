@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Client } from './clients/client.entity';
 import { Card } from './cards/card.entity';
+import { CardClient } from './clients/cardClient.entity';
 
 @Module({
   imports: [
@@ -18,11 +19,11 @@ import { Card } from './cards/card.entity';
       username: "admin",
       password: "admin",
       database: "srms-db",
-      entities: [Client, Card],
+      entities: [Client, Card, CardClient],
       synchronize: false
     }),
     ClientsModule, 
-    CardsModule, 
+    CardsModule,
     ItemsModule
   ],
   controllers: [AppController],
