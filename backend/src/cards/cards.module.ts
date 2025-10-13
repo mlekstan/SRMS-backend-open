@@ -3,11 +3,19 @@ import { CardsController } from "./cards.controller";
 import { CardsService } from "./cards.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
+import { APP_FILTER } from "@nestjs/core";
+import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
 
 
 @Module({
   imports: [TypeOrmModule.forFeature([Card])],
   controllers: [CardsController],
-  providers: [CardsService],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: QueryExceptionFilter
+    },
+    CardsService
+  ],
 })
 export class CardsModule {}
