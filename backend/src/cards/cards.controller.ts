@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseFilters } from "@nestjs/common";
 import { AddCardDto } from "./dto/add-card.dto";
 import { CardsService } from "./cards.service";
 
@@ -10,5 +10,10 @@ export class CardsController {
   @Post("add")
   add(@Body() addCardDto: AddCardDto) {
     return this.cardsService.add(addCardDto);
+  }
+
+  @Get()
+  findAll(@Query() query: any) {
+    return this.cardsService.findAll(query);
   }
 }
