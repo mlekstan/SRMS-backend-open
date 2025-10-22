@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { QueryFailedError } from "typeorm";
 
 @Catch(QueryFailedError)
-export class QueryExceptionFilter implements ExceptionFilter{
+export class QueryExceptionFilter implements ExceptionFilter {
   // Some of Postge SQL codes: https://www.postgresql.org/docs/current/errcodes-appendix.html
   private sqlCodes: Record<string, { status: number; message: string }> = {
     "00": { status: HttpStatus.OK, message: "Successful completion" },

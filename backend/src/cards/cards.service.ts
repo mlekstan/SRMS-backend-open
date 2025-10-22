@@ -40,6 +40,7 @@ export class CardsService {
         .orWhere("date_to IS NOT NULL")
         .getMany();
 
+      console.log(activeCards)
       return activeCards;
     }
 

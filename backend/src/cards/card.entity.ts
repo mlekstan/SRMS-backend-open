@@ -6,7 +6,7 @@ export class Card {
   id: number
 
   @Column({ type: "char", length: 13, name: "barcode" })
-  cardBarcode: string
+  barcode: string
 
   @Column({ type: "boolean", name: "is_temp" })
   isTemp: boolean

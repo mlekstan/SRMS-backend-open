@@ -1,3 +1,3 @@
 export class AddCardDto {
-  cardData: { cardBarcode: string }
+  cardData: { barcode: string }
 }

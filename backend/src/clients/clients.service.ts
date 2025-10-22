@@ -43,7 +43,7 @@ export class ClientsService {
         .leftJoin(CardClient, "card_client", "card.id = card_client.card_id")
         .where("card_client.id IS NULL")
         .orWhere("date_to IS NOT NULL")
-        .andWhere("barcode = :barcode", { barcode: card.cardBarcode})
+        .andWhere("barcode = :barcode", { barcode: card.barcode})
         .getOneOrFail();
 
       cardRow.isTemp = card.isTemp;

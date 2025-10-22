@@ -1,3 +1,3 @@
 export interface CardIface {
-  cardData: { cardBarcode: string }
+  cardData: { barcode: string }
 }
