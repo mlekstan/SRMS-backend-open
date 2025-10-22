@@ -11,6 +11,8 @@ import { Card } from './cards/card.entity';
 import { CardClient } from './clients/cardClient.entity';
 import { CategoriesModule } from './categories/categories.module';
 import { Category } from './categories/category.entity';
+import { DriveType } from './driveTypes/driveType.entity';
+import { DriveTypesModule } from './driveTypes/driveTypes.module';
 
 @Module({
   imports: [
@@ -21,13 +23,14 @@ import { Category } from './categories/category.entity';
       username: "admin",
       password: "admin",
       database: "srms-db",
-      entities: [Client, Card, CardClient, Category],
+      entities: [Client, Card, CardClient, Category, DriveType],
       synchronize: false
     }),
     ClientsModule, 
     CardsModule,
     ItemsModule,
-    CategoriesModule
+    CategoriesModule,
+    DriveTypesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
