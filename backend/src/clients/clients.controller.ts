@@ -8,7 +8,7 @@ export class ClientsController {
   constructor(private clientsService: ClientsService) {}
 
 
-  @Post("add")
+  @Post()
   add(@Body() addClientDto: AddClientDto) {
     return this.clientsService.add(addClientDto);
   }
