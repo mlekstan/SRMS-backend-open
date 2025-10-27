@@ -15,7 +15,29 @@ export class BranchesService {
   }
 
   async add(branch: BranchIface) {
+    try {
+      const { branchData } = branch;
+
+      const branchRow = this.branchesRepository.create({
+        name: branchData.name,
+        country: branchData.country,
+        city: branchData.city,
+        street: branchData.street,
+        streetNumber: branchData.streetNumber,
+        flatNumber: branchData.flatNumber,
+        zipCode: branchData.zipCode
+      });
+
+      return await this.branchesRepository.save(branchRow);
     
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+
+
+
+
   }
 
   async findAll() {

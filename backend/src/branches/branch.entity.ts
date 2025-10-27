@@ -22,6 +22,9 @@ export class Branch {
   @Column({ type: "smallint", name: "street_number" })
   streetNumber: number
 
+  @Column({ type: "smallint", name: "flat_number", nullable: true })
+  flatNumber: number
+
   @Column({ type: "varchar", length: 10, name: "zip_code" })
   zipCode: string
 

@@ -5,6 +5,7 @@ export class AddBranchDto {
     city: string,
     street: string,
     streetNumber: number,
+    flatNumber: number,
     zipCode: string
   }
 }
