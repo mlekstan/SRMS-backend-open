@@ -2,6 +2,7 @@ export class AddItemDto {
   basicData: {
     barcode: string,
     subcategoryId: number,
+    branchId: number,
     name: string,
     shortName: string,
     marketValue: number,

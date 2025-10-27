@@ -17,6 +17,9 @@ import { Subcategory } from './subcategories/subcategory.entity';
 import { Vehicle } from './subcategories/vehicle.entity';
 import { ElectricVehicle } from './subcategories/electricVehicle.entity';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
+import { Branch } from './branches/branch.entity';
+import { Item } from './items/item.entity';
+import { BranchesModule } from './branches/branches.module';
 
 @Module({
   imports: [
@@ -27,7 +30,7 @@ import { SubcategoriesModule } from './subcategories/subcategories.module';
       username: "admin",
       password: "admin",
       database: "srms-db",
-      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle],
+      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item],
       synchronize: false
     }),
     ClientsModule, 
@@ -35,7 +38,8 @@ import { SubcategoriesModule } from './subcategories/subcategories.module';
     ItemsModule,
     CategoriesModule,
     DriveTypesModule,
-    SubcategoriesModule
+    SubcategoriesModule,
+    BranchesModule
   ],
   controllers: [AppController],
   providers: [AppService],
