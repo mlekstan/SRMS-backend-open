@@ -1,7 +1,7 @@
 export interface Item {
   basicData: {
     barcode: string,
-    itemSubcategory: string,
+    subcategoryId: number,
     name: string,
     shortName: string,
     marketValue: number,

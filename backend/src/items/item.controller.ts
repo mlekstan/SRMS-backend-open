@@ -8,7 +8,7 @@ import { ItemsService } from "./items.service";
 export class ItemsController {
   constructor (private itemsService: ItemsService) {}
 
-  @Post("add")
+  @Post()
   add(@Body() addItemDto: AddItemDto) {
     return this.itemsService.add(addItemDto);
   }
