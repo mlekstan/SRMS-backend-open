@@ -12,7 +12,7 @@ export class Item {
   name: string
 
   @Column({ type: "varchar", length: 128, name: "short_name" })
-  short_name: string
+  shortName: string
 
   @Column({ type: "char", length: 13, name: "barcode" })
   barcode: string
