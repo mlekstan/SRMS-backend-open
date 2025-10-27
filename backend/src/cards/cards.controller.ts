@@ -7,7 +7,7 @@ import { CardsService } from "./cards.service";
 export class CardsController {
   constructor(private cardsService: CardsService) {}
 
-  @Post("add")
+  @Post()
   add(@Body() addCardDto: AddCardDto) {
     return this.cardsService.add(addCardDto);
   }

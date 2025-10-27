@@ -21,7 +21,6 @@ export class CardsService {
       const cardRow = new Card();
 
       copyToRow(cardRow, card);
-      cardRow.isTemp = false;
       await this.cardsRepository.save(cardRow);
 
       return card;

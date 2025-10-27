@@ -8,6 +8,6 @@ export class Card {
   @Column({ type: "char", length: 13, name: "barcode" })
   barcode: string
 
-  @Column({ type: "boolean", name: "is_temp" })
+  @Column({ type: "boolean", name: "is_temp", nullable: true })
   isTemp: boolean
 }
