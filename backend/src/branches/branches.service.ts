@@ -34,10 +34,6 @@ export class BranchesService {
       console.log(error)
       throw error;
     }
-
-
-
-
   }
 
   async findAll() {

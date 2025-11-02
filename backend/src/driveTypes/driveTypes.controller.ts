@@ -3,7 +3,7 @@ import { AddDriveTypeDto } from "./dto/add-driveType.dto";
 import { DrvieTypesService } from "./driveTypes.service";
 
 
-@Controller("driveTypes")
+@Controller("drive-types")
 export class DriveTypesController {
   constructor(private driveTypesService: DrvieTypesService) {}
 

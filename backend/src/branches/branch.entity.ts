@@ -1,4 +1,5 @@
 import { Item } from "src/items/item.entity";
+import { User } from "src/users/user.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -30,5 +31,8 @@ export class Branch {
 
   @OneToMany(() => Item, (item) => item.branch)
   items: Item[]
+
+  @OneToMany(() => User, (user) => user.branch)
+  users: User[]
   
 }
