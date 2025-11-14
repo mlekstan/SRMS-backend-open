@@ -11,6 +11,12 @@ export class UsersController {
     return this.usersService.add(addUserDto);
   }
 
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateUserDto: AddUserDto) {
+    console.log(updateUserDto)
+    return this.usersService.updateOne(params, updateUserDto);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -21,10 +27,4 @@ export class UsersController {
     return this.usersService.findOne(params);
   }
 
-  @Put(":id")
-  updateOne(@Param() params: { id: string }, @Body() updateUserDto: AddUserDto) {
-    console.log(updateUserDto)
-    return this.usersService.updateOne(params, updateUserDto);
-  }
-  
 }
