@@ -8,11 +8,11 @@ export class CardClient {
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToOne(() => Card)
+  @ManyToOne(() => Card, (card) => card.cardClients)
   @JoinColumn({name: "card_id", referencedColumnName: "id"})
   card: Card
 
-  @ManyToOne(() => Client, { nullable: true })
+  @ManyToOne(() => Client, (card) => card.clientCards, { nullable: true })
   @JoinColumn({name: "client_id", referencedColumnName: "id"})
   client: Client
 

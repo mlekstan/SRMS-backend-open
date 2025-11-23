@@ -1,6 +1,6 @@
 export interface ClientIface {
-  cardData: { barcode: string, isTemp: boolean };
+  cardData: { cardId: number, isTemp: boolean };
   contactData: { areaCode: string, email: string, phoneNumber: string };
-  personalData: { firstName: string, identityCardNumber: string, lastName: string, secondName: string};
+  personalData: { firstName: string, identityCardNumber: string, lastName: string, middleName: string};
 	residenceData: { city: string, country: string, flatNumber: number, street: string, streetNumber: number, zipCode: string };
 }

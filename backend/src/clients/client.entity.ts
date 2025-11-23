@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { CardClient } from "./cardClient.entity";
 
 @Entity({ name: "client" })
 export class Client {
@@ -46,4 +47,7 @@ export class Client {
 
   @Column({ type: "timestamp", name: "date_joined" })
   dateJoined: Date
+
+  @OneToMany(() => CardClient, (cardClient) => cardClient.client)
+  clientCards: CardClient[]
 }
