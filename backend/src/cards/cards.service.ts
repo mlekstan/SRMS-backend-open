@@ -34,12 +34,18 @@ export class CardsService {
     if (query.active !== undefined) { 
       const activeCards = await this.cardsRepository
         .createQueryBuilder("card")
-        .leftJoin(CardClient, "card_client", "card.id = card_client.card_id")
-        .where("card_client.id IS NULL")
-        .orWhere("date_to IS NOT NULL")
+        .where((qb) => {
+          const subQuery = qb.subQuery()
+            .select("1")
+            .from(CardClient, "card_client")
+            .where("card.id = card_client.card_id")
+            .andWhere("card_client.date_to IS NULL")
+            .getQuery();
+
+          return `NOT EXISTS (${subQuery})`;
+        })
         .getMany();
 
-      console.log(activeCards)
       return activeCards;
     }
 

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { CardClient } from "src/clients/cardClient.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity({ name: "card" })
 export class Card {
@@ -10,4 +11,7 @@ export class Card {
 
   @Column({ type: "boolean", name: "is_temp", nullable: true })
   isTemp: boolean
+
+  @OneToMany(() => CardClient, (cardClient) => cardClient.card)
+  cardClients: CardClient[]
 }
