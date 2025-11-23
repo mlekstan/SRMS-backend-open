@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { AddItemDto } from "./dto/add-item.dto";
 import { ItemsService } from "./items.service";
 
@@ -11,5 +11,20 @@ export class ItemsController {
   @Post()
   add(@Body() addItemDto: AddItemDto) {
     return this.itemsService.add(addItemDto);
+  }
+
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateItemDto: AddItemDto) {
+    return this.itemsService.updateOne(params, updateItemDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.itemsService.findAll();
+  }
+
+  @Get(":id")
+  findOne(@Param() params: { id: string }) {
+    return this.itemsService.findOne(params);
   }
 }
