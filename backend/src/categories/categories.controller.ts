@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
 import { AddCategoryDto } from "./dto/add-category.dto";
 
@@ -12,8 +12,18 @@ export class CategoriesController {
     return this.categoriesService.add(addCategoryDto);
   }
 
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateCategoryDto: AddCategoryDto) {
+    return this.categoriesService.updateOne(params, updateCategoryDto);
+  }
+
   @Get()
   findAll() {
     return this.categoriesService.findAll();
+  }
+
+  @Get(":id")
+  findOne(@Param() params: { id: string }) {
+    return this.categoriesService.findOne(params);
   }
 }

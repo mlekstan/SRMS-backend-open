@@ -24,6 +24,16 @@ export class CategoriesService {
     );
   }
 
+  async updateOne(params: { id: string }, category: CategoryIface) {
+    const { categoryData } = category;
+    
+    const categoryRow = this.categoriesRepository.create({
+      id: Number(params.id),
+      name: categoryData.name
+    });
+
+    return await this.categoriesRepository.save(categoryRow);
+  }
 
   async findAll() {
     try {
@@ -34,5 +44,15 @@ export class CategoriesService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async findOne(params: { id: string }) {
+    const category = await this.categoriesRepository.findOneOrFail({
+      where: {
+        id: Number(params.id)
+      }
+    });
+
+    return category;
   }
 }
