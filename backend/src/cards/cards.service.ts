@@ -30,6 +30,17 @@ export class CardsService {
     }
   }
 
+  async updateOne(params: { id: string }, card: CardIface) {
+    console.log(card, params)
+
+    const cardRow = this.cardsRepository.create({
+      id: Number(params.id),
+      barcode: card.cardData.barcode,
+    });
+
+    return await this.cardsRepository.save(cardRow);
+  }
+
   async findAll(query: any) {
     if (query.active !== undefined) { 
       const activeCards = await this.cardsRepository
@@ -51,5 +62,15 @@ export class CardsService {
 
     const allCards = this.cardsRepository.find();
     return allCards;
+  }
+
+  async findOne(params: { id: string }) {
+    const card = await this.cardsRepository.findOneOrFail({
+      where: {
+        id: Number(params.id)
+      }
+    });
+
+    return card;
   }
 }

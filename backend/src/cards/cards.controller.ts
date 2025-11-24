@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseFilters } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { AddCardDto } from "./dto/add-card.dto";
 import { CardsService } from "./cards.service";
 
@@ -12,8 +12,18 @@ export class CardsController {
     return this.cardsService.add(addCardDto);
   }
 
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateCardDto: AddCardDto) {
+    return this.cardsService.updateOne(params, updateCardDto);
+  }
+
   @Get()
   findAll(@Query() query: any) {
     return this.cardsService.findAll(query);
+  }
+
+  @Get(":id")
+  findOne(@Param() params: { id: string }) {
+    return this.cardsService.findOne(params);
   }
 }
