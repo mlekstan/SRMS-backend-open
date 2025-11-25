@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { AddDriveTypeDto } from "./dto/add-driveType.dto";
 import { DrvieTypesService } from "./driveTypes.service";
 
@@ -13,8 +13,18 @@ export class DriveTypesController {
     return this.driveTypesService.add(addDriveTypeDto);
   }
 
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateDriveTypeDto: AddDriveTypeDto) {
+    return this.driveTypesService.updateOne(params, updateDriveTypeDto);
+  }
+
   @Get()
   findAll() {
     return this.driveTypesService.findAll();
+  }
+
+  @Get(":id")
+  findOne(@Param() params: { id: string }) {
+    return this.driveTypesService.findOne(params);
   }
 }

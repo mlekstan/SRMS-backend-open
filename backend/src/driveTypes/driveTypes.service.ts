@@ -29,6 +29,17 @@ export class DrvieTypesService {
     }
   }
 
+  async updateOne(params: { id: string }, driveType: DriveTypeIface) {
+    const { driveTypeData } = driveType;
+
+    const driveTypeRow = this.driveTypesRpository.create({
+      id: Number(params.id),
+      name: driveTypeData.name
+    });
+
+    return await this.driveTypesRpository.save(driveTypeRow);
+  }
+
   async findAll() {
     try {
       const driveTypes = await this.driveTypesRpository.find();
@@ -37,5 +48,15 @@ export class DrvieTypesService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async findOne(params: { id: string }) {
+    const driveType = await this.driveTypesRpository.findOneOrFail({
+      where: {
+        id: Number(params.id)
+      }
+    });
+
+    return driveType;
   }
 }
