@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { SubcategoriesService } from "./subcategories.service";
 import { AddSubcategoryDto } from "./dto/add-subcategory.dto";
 
@@ -11,9 +11,19 @@ export class SubcategoriesController {
     return this.subcategoriesService.add(addSubcategoryDto);
   }
 
+  @Put(":id")
+  updateOne(@Param() params: { id: string }, @Body() updateSubcategoryDto: AddSubcategoryDto) {
+    return this.subcategoriesService.updateOne(params, updateSubcategoryDto);
+  }
+
   @Get()
   findAll() {
     return this.subcategoriesService.findAll();
+  }
+
+  @Get(":id")
+  findOne(@Param() params: { id: string }) {
+    return this.subcategoriesService.findOne(params);
   }
 
 }

@@ -71,10 +71,114 @@ export class SubcategoriesService {
     }
   }
 
+  async updateOne(params: { id: string }, subcategory: SubcategoryIface) {
+    const { subcategoryData, vehicleData, electricVehicleData } = subcategory;
+    const id = Number(params.id);
+
+    return this.dataSource.transaction(async (manager) => {
+
+      await manager.update(Subcategory, id, {
+        name: subcategoryData.name,
+        category: { id: subcategoryData.categoryId }
+      });
+
+      if (subcategoryData.categoryId !== 1) {
+        await manager.delete(ElectricVehicle, { id });
+        await manager.delete(Vehicle, { id });
+        return subcategory;
+      }
+
+      await manager.save(Vehicle, {
+        id,
+        curbWeight: vehicleData.curbWeight,
+        maxLoad: vehicleData.maxLoad,
+        minAge: vehicleData.minAge,
+        maxAge: vehicleData.maxAge,
+        driveType: { id: vehicleData.driveTypeId }
+      });
+
+      if (vehicleData.driveTypeId !== 2) {
+        await manager.delete(ElectricVehicle, { id });
+        return subcategory;
+      }
+
+      await manager.save(ElectricVehicle, {
+        id,
+        enginePower: electricVehicleData.enginePower,
+        batteryVoltage: electricVehicleData.batteryVoltage,
+        batteryCapacity: electricVehicleData.batteryCapacity
+      });
+
+      return subcategory;
+    });
+  }
 
   async findAll() {
-    const subcategories = await this.subcategoriesRepository.find();
+    const subcategories = await this.subcategoriesRepository.find({
+      relations: {
+        category: true
+      },
+      select: {
+        id: true,
+        name: true,
+        category: {
+          id: true,
+          name: true,
+        }
+      },
+    });
+
     return subcategories;
+  }
+
+  async findOne(params: { id: string }) {
+    const subcategoryRow = await this.subcategoriesRepository.findOneOrFail({
+      relations: {
+        category: true,
+      },
+      where: {
+        id: Number(params.id)
+      },
+      select: {
+        id: true,
+        name: true,
+        category: {
+          id: true,
+          name: true
+        },
+      }
+    });
+
+    const vehicleRow = await this.vehiclesRepository.findOne({
+      relations: {
+        driveType: true,
+        electricVehicle: true,
+      },
+      where: {
+        id: Number(params.id)
+      },
+      select: {
+        id: true,
+        curbWeight: true,
+        maxLoad: true,
+        minAge: true,
+        maxAge: true,
+        driveType: {
+          id: true,
+          name: true
+        },
+        electricVehicle: {
+          id: true,
+          enginePower: true,
+          batteryVoltage: true,
+          batteryCapacity: true,
+        }
+      }
+    });
+
+    const result = { ...subcategoryRow, vehicle: vehicleRow };
+
+    return result;
   }
 
 }
