@@ -3,21 +3,23 @@ import { Repository } from "typeorm";
 import { User } from "./user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserIface } from "./interfaces/users.interface";
-
+import bcrypt from "bcrypt";
 
 @Injectable()
 export class UsersService {
-  private usersRepository: Repository<User>
+  private usersRepository: Repository<User>;
+  private saltOrRounds: string | number;
 
   constructor(@InjectRepository(User) usersRepostory: Repository<User>) {
     this.usersRepository = usersRepostory;
+    this.saltOrRounds = 10;
   }
 
 
   async add(user: UserIface) {
     const { userData } = user;
-
-    console.log(user);
+  
+    const passwordHash = await bcrypt.hash(userData.password, this.saltOrRounds);
 
     const userRow = this.usersRepository.create({
       firstName: userData.firstName,
@@ -27,7 +29,7 @@ export class UsersService {
       areaCode: userData.areaCode,
       phoneNumber: userData.phoneNumber,
       branch: { id: userData.branchId },
-      password: userData.password,
+      password: passwordHash,
       dateJoined: new Date()
     });
 
@@ -35,10 +37,13 @@ export class UsersService {
   }
 
   async updateOne(params: { id: string }, user: UserIface) {
-    console.log(user)
-    
     const { userData } = user;
-    
+
+    const passwordHash = 
+      (userData.password) ? 
+      await bcrypt.hash(userData.password, this.saltOrRounds) : 
+      undefined;
+
     const userRow = this.usersRepository.create({
       id: Number(params.id),
       firstName: userData.firstName,
@@ -48,7 +53,7 @@ export class UsersService {
       areaCode: userData.areaCode,
       phoneNumber: userData.phoneNumber,
       branch: { id: userData.branchId },
-      password: userData.password,
+      password: passwordHash,
     });
 
     return await this.usersRepository.save(userRow);
@@ -76,10 +81,14 @@ export class UsersService {
     });
   }
 
-  async findOne(params: { id: string }) {
-    return await this.usersRepository.findOneOrFail({
+  async findOne(params: { id: string }, secure?: boolean): Promise<User>;
+  async findOne(email: string, secure?: boolean): Promise<User>;
+  async findOne(arg: { id: string } | string, secure?: boolean) {
+    let whereOption = (typeof arg === "string") ? { email: arg } : { id: Number(arg.id) };
+
+    const user = await this.usersRepository.findOneOrFail({
       where: {
-        id: Number(params.id)
+        ...whereOption
       },
       relations: {
         branch: true,
@@ -92,6 +101,7 @@ export class UsersService {
         email: true,
         areaCode: true,
         phoneNumber: true,
+        password: !secure,
         dateJoined: true,
         branch: {
           id: true,
@@ -99,6 +109,8 @@ export class UsersService {
         }
       }
     });
+
+    return user;
   }
 
 }

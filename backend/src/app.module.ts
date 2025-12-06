@@ -22,6 +22,7 @@ import { Item } from './items/item.entity';
 import { BranchesModule } from './branches/branches.module';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UsersModule } from './users/users.module';
     SubcategoriesModule,
     BranchesModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
