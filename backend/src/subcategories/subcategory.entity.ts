@@ -2,6 +2,7 @@ import { Category } from "src/categories/category.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Vehicle } from "./vehicle.entity";
 import { Item } from "src/items/item.entity";
+import { RentalSalePosition } from "src/rentalSale/entities/rentalSalePosition.entity";
 
 
 @Entity({ name: "item_subcategory" })
@@ -21,6 +22,9 @@ export class Subcategory {
 
   @OneToMany(() => Item, (item) => item.subcategory)
   items: Item[]
+
+  @OneToMany(() => RentalSalePosition, (rentalSalePosition) => rentalSalePosition.subcategory)
+  rentalSalePositions: RentalSalePosition[]
 
 }
 

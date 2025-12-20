@@ -1,17 +1,23 @@
-import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { IsNull, Not, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Item } from "./item.entity";
 import { ItemIface } from "./interfaces/items.interface";
+import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
 
 
 
 @Injectable()
 export class ItemsService {
-  private itemsRepository: Repository<Item>
+  private itemsRepository: Repository<Item>;
+  private rentedItemsRepository: Repository<RentedItem>;
 
-  constructor(@InjectRepository(Item) itemsRepository: Repository<Item>) {
+  constructor(
+    @InjectRepository(Item) itemsRepository: Repository<Item>,
+    @InjectRepository(RentedItem) rentedItemsRepository: Repository<RentedItem>
+  ) {
     this.itemsRepository = itemsRepository;
+    this.rentedItemsRepository = rentedItemsRepository;
   }
 
   async add(item: ItemIface) {
@@ -91,10 +97,18 @@ export class ItemsService {
     return items;
   }
 
-  async findOne(params: { id: string }) {
+  async findOne(params: { id: string } | { barcode: string }, subcategoryId?: string, free?: string) {
+    let where = {};
+    if ("id" in params) {
+      where = { id: Number(params.id) };
+    }
+    if ("barcode" in params) {
+      where = { barcode: params.barcode };
+    }
+
     const item = await this.itemsRepository.findOneOrFail({
       where: {
-        id: Number(params.id)
+        ...where
       },
       relations: {
         subcategory: true,
@@ -119,6 +133,40 @@ export class ItemsService {
       }
     });
 
+    const subcategoryMatch = (subcategoryId) ? (item.subcategory.id === Number(subcategoryId)) : null;
+    const isFree = (free) ? await this.isFree({ id: item.id }) : null;
+
+    if (subcategoryMatch === false) {
+      throw new HttpException("Items subcategories do not match", HttpStatus.NOT_FOUND);
+    }
+  
+    if (free === "true" && isFree === false) {
+      throw new HttpException("Item is not free, but should be free", HttpStatus.CONFLICT);
+    }
+
+    if (free === "false" && isFree === true) {
+      throw new HttpException("Item is free, but shold not be free", HttpStatus.CONFLICT);
+    }
+
     return item;
+  }
+
+  async isFree(params: { id: number }) {
+    const rentedItem = await this.rentedItemsRepository.findOne({
+      relations: {
+        item: true
+      },
+      where: {
+        item: {
+          id: params.id
+        },
+        end: IsNull()
+      },
+      select: {
+        id: true
+      }
+    });
+
+    return (rentedItem) ? false : true;
   }
 }

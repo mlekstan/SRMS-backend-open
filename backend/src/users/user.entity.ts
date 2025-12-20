@@ -1,5 +1,7 @@
 import { Branch } from "src/branches/branch.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { RentalSale } from "src/rentalSale/entities/rentalSale.entity";
+import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity({ name: "user" })
@@ -34,5 +36,14 @@ export class User {
   @ManyToOne(() => Branch, (branch) => branch.users)
   @JoinColumn({ name: "branch_id", referencedColumnName: "id" })
   branch: Branch
+
+  @OneToMany(() => RentalSale, (rentalSale) => rentalSale.user)
+  rentalSales: RentalSale[]
+
+  @OneToMany(() => RentedItem, (rentedItem) => rentedItem.startUser)
+  startUserRentedItems: RentedItem[]
+  
+  @OneToMany(() => RentedItem, (rentedItem) => rentedItem.endUser)
+  endUserRentedItems: RentedItem[]
 
 }

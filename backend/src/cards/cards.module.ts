@@ -9,6 +9,7 @@ import { QueryExceptionFilter } from "src/exception-filters/query-exception.filt
 
 @Module({
   imports: [TypeOrmModule.forFeature([Card])],
+  exports: [CardsService],
   controllers: [CardsController],
   providers: [
     {

@@ -5,11 +5,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Item } from "./item.entity";
 import { APP_FILTER } from "@nestjs/core";
 import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
+import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
 
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Item])],
+  imports: [TypeOrmModule.forFeature([Item, RentedItem])],
   controllers: [ItemsController],
   providers: [
     {

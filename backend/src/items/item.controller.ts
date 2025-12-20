@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { AddItemDto } from "./dto/add-item.dto";
 import { ItemsService } from "./items.service";
 
@@ -26,5 +26,14 @@ export class ItemsController {
   @Get(":id")
   findOne(@Param() params: { id: string }) {
     return this.itemsService.findOne(params);
+  }
+
+  @Get("barcode/:barcode")
+  findOneByBarcode(
+    @Param() params: { barcode: string }, 
+    @Query("subcategoryId") subcategoryId: string, 
+    @Query("free") free: string
+  ) {
+    return this.itemsService.findOne(params, subcategoryId, free);
   }
 }

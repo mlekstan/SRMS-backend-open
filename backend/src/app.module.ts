@@ -23,6 +23,10 @@ import { BranchesModule } from './branches/branches.module';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { RentalSale } from './rentalSale/entities/rentalSale.entity';
+import { RentalSalePosition } from './rentalSale/entities/rentalSalePosition.entity';
+import { RentedItem } from './rentalSale/entities/rentedItem.entity';
+import { RentalSalesModule } from './rentalSale/rentalSales.module';
 
 @Module({
   imports: [
@@ -33,7 +37,7 @@ import { AuthModule } from './auth/auth.module';
       username: "admin",
       password: "admin",
       database: "srms-db",
-      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item, User],
+      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item, User, RentalSale, RentalSalePosition, RentedItem],
       synchronize: false
     }),
     ClientsModule, 
@@ -45,6 +49,7 @@ import { AuthModule } from './auth/auth.module';
     BranchesModule,
     UsersModule,
     AuthModule,
+    RentalSalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,7 @@
 import { Branch } from "src/branches/branch.entity";
+import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
 import { Subcategory } from "src/subcategories/subcategory.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity({ name: "item" })
@@ -36,5 +37,8 @@ export class Item {
   @ManyToOne(() => Branch)
   @JoinColumn({ name: "branch_id", referencedColumnName: "id" })
   branch: Branch
+
+  @OneToMany(() => RentedItem, (rentedItem) => rentedItem.item)
+  rentedItems: RentedItem[]
 
 }

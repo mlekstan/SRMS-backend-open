@@ -73,4 +73,15 @@ export class CardsService {
 
     return card;
   }
+
+  async findOneByBarcode(params: { barcode: string }) {
+    const card = await this.cardsRepository.findOneOrFail({
+      where: {
+        barcode: params.barcode
+      }
+    });
+
+    return card;
+  }
+  
 }
