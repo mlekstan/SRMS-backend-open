@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RentalSale } from "./rentalSale.entity";
-import { Subcategory } from "src/subcategories/subcategory.entity";
+import { Subcategory } from "../../subcategories/subcategory.entity";
 import { RentedItem } from "./rentedItem.entity";
 
 

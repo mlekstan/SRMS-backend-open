@@ -1,6 +1,6 @@
-import { Branch } from "src/branches/branch.entity";
-import { Card } from "src/cards/card.entity";
-import { User } from "src/users/user.entity";
+import { Branch } from "../../branches/branch.entity";
+import { Card } from "../../cards/card.entity";
+import { User } from "../../users/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RentalSalePosition } from "./rentalSalePosition.entity";
 

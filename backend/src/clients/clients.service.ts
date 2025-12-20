@@ -3,8 +3,7 @@ import { ClientIface } from "./interfaces/client.interface";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, IsNull, Repository } from "typeorm";
 import { Client } from "./client.entity";
-import { copyToRow } from "src/helper-functions/copyToRow";
-import { Card } from "src/cards/card.entity";
+import { Card } from "../cards/card.entity"
 import { CardClient } from "./cardClient.entity";
 import { UpdateClientIface } from "./interfaces/updateClient.interface";
 

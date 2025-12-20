@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { UsersController } from "./users.controller";
-import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
+import { QueryExceptionFilter } from "../exception-filters/query-exception.filter";
 import { APP_FILTER } from "@nestjs/core";
 import { UsersService } from "./users.service";
 

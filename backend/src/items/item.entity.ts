@@ -1,6 +1,6 @@
-import { Branch } from "src/branches/branch.entity";
-import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
-import { Subcategory } from "src/subcategories/subcategory.entity";
+import { Branch } from "../branches/branch.entity";
+import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
+import { Subcategory } from "../subcategories/subcategory.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

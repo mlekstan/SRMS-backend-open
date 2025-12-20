@@ -3,7 +3,7 @@ import { IsNull, Not, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Item } from "./item.entity";
 import { ItemIface } from "./interfaces/items.interface";
-import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
+import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
 
 
 

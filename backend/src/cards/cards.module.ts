@@ -4,7 +4,7 @@ import { CardsService } from "./cards.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
 import { APP_FILTER } from "@nestjs/core";
-import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
+import { QueryExceptionFilter } from "../exception-filters/query-exception.filter";
 
 
 @Module({

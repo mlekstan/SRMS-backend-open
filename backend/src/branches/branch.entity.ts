@@ -1,6 +1,6 @@
-import { Item } from "src/items/item.entity";
-import { RentalSale } from "src/rentalSale/entities/rentalSale.entity";
-import { User } from "src/users/user.entity";
+import { Item } from "../items/item.entity"
+import { RentalSale } from "../rentalSale/entities/rentalSale.entity"
+import { User } from "../users/user.entity"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

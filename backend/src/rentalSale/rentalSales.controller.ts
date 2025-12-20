@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { RentalSalesService } from "./rentalSales.service";
-import { CardsService } from "src/cards/cards.service";
+import { CardsService } from "../cards/cards.service";
 
 
 

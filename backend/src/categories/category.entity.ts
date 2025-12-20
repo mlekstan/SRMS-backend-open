@@ -1,4 +1,4 @@
-import { Subcategory } from "src/subcategories/subcategory.entity";
+import { Subcategory } from "../subcategories/subcategory.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

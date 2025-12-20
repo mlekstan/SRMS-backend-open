@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { CardClient } from "./cardClient.entity";
+import { ApiHideProperty } from "@nestjs/swagger";
 
 @Entity({ name: "client" })
 export class Client {
@@ -49,5 +50,6 @@ export class Client {
   dateJoined: Date
 
   @OneToMany(() => CardClient, (cardClient) => cardClient.client)
+  @ApiHideProperty()
   clientCards: CardClient[]
 }

@@ -1,5 +1,6 @@
-import { CardClient } from "src/clients/cardClient.entity";
-import { RentalSale } from "src/rentalSale/entities/rentalSale.entity";
+import { ApiHideProperty } from "@nestjs/swagger";
+import { CardClient } from "../clients/cardClient.entity";
+import { RentalSale } from "../rentalSale/entities/rentalSale.entity";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity({ name: "card" })
@@ -14,9 +15,11 @@ export class Card {
   isTemp: boolean
 
   @OneToMany(() => CardClient, (cardClient) => cardClient.card)
+  @ApiHideProperty()
   cardClients: CardClient[]
 
   @OneToMany(() => RentalSale, (rentalSale) => rentalSale.card)
+  @ApiHideProperty()
   rentalSales: RentalSale[]
   
 }

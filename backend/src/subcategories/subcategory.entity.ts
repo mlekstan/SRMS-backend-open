@@ -1,8 +1,8 @@
-import { Category } from "src/categories/category.entity";
+import { Category } from "../categories/category.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Vehicle } from "./vehicle.entity";
-import { Item } from "src/items/item.entity";
-import { RentalSalePosition } from "src/rentalSale/entities/rentalSalePosition.entity";
+import { Item } from "../items/item.entity";
+import { RentalSalePosition } from "../rentalSale/entities/rentalSalePosition.entity";
 
 
 @Entity({ name: "item_subcategory" })

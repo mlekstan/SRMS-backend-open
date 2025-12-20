@@ -3,7 +3,7 @@ import { Repository } from "typeorm";
 import { Category } from "./category.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CategoryIface } from "./interfaces/category.interface";
-import { copyToRow } from "src/helper-functions/copyToRow";
+import { copyToRow } from "../helper-functions/copyToRow";
 
 
 @Injectable()

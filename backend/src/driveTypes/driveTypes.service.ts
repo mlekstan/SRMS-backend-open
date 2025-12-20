@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { DriveType } from "./driveType.entity";
-import { copyToRow } from "src/helper-functions/copyToRow";
+import { copyToRow } from "../helper-functions/copyToRow";
 import { DriveTypeIface } from "./interfaces/driveType.interface";
 
 

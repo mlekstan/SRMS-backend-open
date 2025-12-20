@@ -3,10 +3,10 @@ import { ClientsController } from "./clients.controller";
 import { ClientsService } from "./clients.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Client } from "./client.entity";
-import { Card } from "src/cards/card.entity";
+import { Card } from "../cards/card.entity"
 import { CardClient } from "./cardClient.entity";
 import { APP_FILTER } from "@nestjs/core";
-import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
+import { QueryExceptionFilter } from "../exception-filters/query-exception.filter"
 
 
 @Module({

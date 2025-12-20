@@ -4,7 +4,7 @@ import { Category } from "./category.entity";
 import { CategoriesController } from "./categories.controller";
 import { CategoriesService } from "./categories.service";
 import { APP_FILTER } from "@nestjs/core";
-import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
+import { QueryExceptionFilter } from "../exception-filters/query-exception.filter";
 
 
 @Module({

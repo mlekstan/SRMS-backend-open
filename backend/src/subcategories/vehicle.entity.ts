@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 import { Subcategory } from "./subcategory.entity";
-import { DriveType } from "src/driveTypes/driveType.entity";
+import { DriveType } from "../driveTypes/driveType.entity";
 import { ElectricVehicle } from "./electricVehicle.entity";
 
 

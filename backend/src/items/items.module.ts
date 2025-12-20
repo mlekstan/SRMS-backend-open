@@ -4,8 +4,8 @@ import { ItemsService } from "./items.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Item } from "./item.entity";
 import { APP_FILTER } from "@nestjs/core";
-import { QueryExceptionFilter } from "src/exception-filters/query-exception.filter";
-import { RentedItem } from "src/rentalSale/entities/rentedItem.entity";
+import { QueryExceptionFilter } from "../exception-filters/query-exception.filter";
+import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
 
 
 

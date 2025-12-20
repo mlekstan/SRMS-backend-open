@@ -5,7 +5,6 @@ import { Vehicle } from "./vehicle.entity";
 import { ElectricVehicle } from "./electricVehicle.entity";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { SubcategoryIface } from "./interfaces/subcategory.interface";
-import { copyToRow } from "src/helper-functions/copyToRow";
 
 
 @Injectable()

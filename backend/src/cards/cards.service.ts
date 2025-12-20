@@ -1,11 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { QueryFailedError } from "typeorm";
+import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Card } from "./card.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CardIface } from "./interfaces/card.interface";
-import { copyToRow } from "src/helper-functions/copyToRow";
-import { CardClient } from "src/clients/cardClient.entity";
+import { copyToRow } from "../helper-functions/copyToRow";
+import { CardClient } from "../clients/cardClient.entity";
 
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { RentalSalePosition } from "./rentalSalePosition.entity";
-import { User } from "src/users/user.entity";
-import { Item } from "src/items/item.entity";
+import { User } from "../../users/user.entity";
+import { Item } from "../../items/item.entity";
 
 
 @Entity({ name: "rented_item" })
