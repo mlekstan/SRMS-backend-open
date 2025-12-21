@@ -1,4 +1,3 @@
-import { ApiHideProperty } from "@nestjs/swagger";
 import { CardClient } from "../clients/cardClient.entity";
 import { RentalSale } from "../rentalSale/entities/rentalSale.entity";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
@@ -15,11 +14,9 @@ export class Card {
   isTemp: boolean
 
   @OneToMany(() => CardClient, (cardClient) => cardClient.card)
-  @ApiHideProperty()
   cardClients: CardClient[]
 
   @OneToMany(() => RentalSale, (rentalSale) => rentalSale.card)
-  @ApiHideProperty()
   rentalSales: RentalSale[]
   
 }
