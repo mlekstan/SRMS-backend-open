@@ -10,6 +10,7 @@ export function createDocument(app: INestApplication) {
     .setVersion("1.0")
     .addServer("https://127.0.0.1:3000", "For web app")
     .addServer("http://127.0.0.1:3001", "For mobile app")
+    .setExternalDoc("Reference", "http://127.0.0.1:8090")
     .addBearerAuth({
       type: "http",
       scheme: "bearer",
