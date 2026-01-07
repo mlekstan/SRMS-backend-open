@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { SubcategoriesService } from "./subcategories.service";
 import { AddSubcategoryDto } from "./dto/add-subcategory.dto";
 
@@ -17,8 +17,8 @@ export class SubcategoriesController {
   }
 
   @Get()
-  findAll() {
-    return this.subcategoriesService.findAll();
+  findAll(@Query("categoryId", ParseIntPipe) categoryId: number) {
+    return this.subcategoriesService.findAll(categoryId);
   }
 
   @Get(":id")

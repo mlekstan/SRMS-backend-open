@@ -112,8 +112,11 @@ export class SubcategoriesService {
     });
   }
 
-  async findAll() {
+  async findAll(categoryId: number) {
+    const where = categoryId ? { category: { id: categoryId } } : {};
+
     const subcategories = await this.subcategoriesRepository.find({
+      where,
       relations: {
         category: true
       },
