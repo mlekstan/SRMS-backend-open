@@ -36,11 +36,11 @@ export class BranchesService {
     }
   }
 
-  async updateOne(params: { id: string }, branch: BranchIface) {
+  async updateOne(id: number, branch: BranchIface) {
     const { branchData } = branch;
     
     const branchRow = this.branchesRepository.create({
-      id: Number(params.id),
+      id: id,
       name: branchData.name,
       country: branchData.country,
       city: branchData.city,
@@ -59,10 +59,10 @@ export class BranchesService {
     return branches;
   }
 
-  async findOne(params: { id: string }) {
+  async findOne(id: number) {
     return await this.branchesRepository.findOneOrFail({
       where: {
-        id: Number(params.id)
+        id: id
       }
     });
   }

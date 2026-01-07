@@ -1,6 +1,7 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
 import { Request, Response } from "express";
 import { QueryFailedError } from "typeorm";
+
 
 @Catch(QueryFailedError)
 export class QueryExceptionFilter implements ExceptionFilter {
@@ -46,6 +47,5 @@ export class QueryExceptionFilter implements ExceptionFilter {
         detail: `${info} -> ${detail}`,
         path: request.url,
       })
-     
   }
 }
