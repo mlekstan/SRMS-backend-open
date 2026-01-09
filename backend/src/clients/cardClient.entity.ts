@@ -9,12 +9,12 @@ export class CardClient {
   id: number
 
   @ManyToOne(() => Card, (card) => card.cardClients)
-  @JoinColumn({name: "card_id", referencedColumnName: "id"})
+  @JoinColumn({ name: "card_id", referencedColumnName: "id" })
   card: Card
 
   
-  @ManyToOne(() => Client, (card) => card.clientCards, { nullable: true })
-  @JoinColumn({name: "client_id", referencedColumnName: "id"})
+  @ManyToOne(() => Client, (client) => client.clientCards, { nullable: true })
+  @JoinColumn({ name: "client_id", referencedColumnName: "id" })
   client: Client
 
   @Column({ type: "timestamp", name: "date_from" })
