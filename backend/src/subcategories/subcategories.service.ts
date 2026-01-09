@@ -112,7 +112,7 @@ export class SubcategoriesService {
     });
   }
 
-  async findAll(categoryId: number) {
+  async findAll(categoryId?: number) {
     const where = categoryId ? { category: { id: categoryId } } : {};
 
     const subcategories = await this.subcategoriesRepository.find({

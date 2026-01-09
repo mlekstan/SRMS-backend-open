@@ -17,7 +17,7 @@ export class SubcategoriesController {
   }
 
   @Get()
-  findAll(@Query("categoryId", ParseIntPipe) categoryId: number) {
+  findAll(@Query("categoryId", new ParseIntPipe({ optional: true })) categoryId: number) {
     return this.subcategoriesService.findAll(categoryId);
   }
 
