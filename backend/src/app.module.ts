@@ -27,6 +27,8 @@ import { RentalSale } from './rentalSale/entities/rentalSale.entity';
 import { RentalSalePosition } from './rentalSale/entities/rentalSalePosition.entity';
 import { RentedItem } from './rentalSale/entities/rentedItem.entity';
 import { RentalSalesModule } from './rentalSale/rentalSales.module';
+import { VehiclePrice } from './price-list/entities/vehicle-price.entity';
+import { PriceListModule } from './price-list/price-list.module';
 
 @Module({
   imports: [
@@ -37,7 +39,7 @@ import { RentalSalesModule } from './rentalSale/rentalSales.module';
       username: "admin",
       password: "admin",
       database: "srms-db",
-      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item, User, RentalSale, RentalSalePosition, RentedItem],
+      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item, User, RentalSale, RentalSalePosition, RentedItem, VehiclePrice],
       synchronize: false
     }),
     ClientsModule, 
@@ -50,6 +52,7 @@ import { RentalSalesModule } from './rentalSale/rentalSales.module';
     UsersModule,
     AuthModule,
     RentalSalesModule,
+    PriceListModule
   ],
   controllers: [AppController],
   providers: [AppService],

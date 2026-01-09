@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Subcategory } from "./subcategory.entity";
 import { DriveType } from "../driveTypes/driveType.entity";
 import { ElectricVehicle } from "./electricVehicle.entity";
+import { VehiclePrice } from "src/price-list/entities/vehicle-price.entity";
 
 
 @Entity({ name: "vehicle" })
@@ -32,4 +33,6 @@ export class Vehicle {
   @OneToOne(() => ElectricVehicle, (electricVehicle) => electricVehicle.vehicle)
   electricVehicle: ElectricVehicle
 
+  @OneToMany(() => VehiclePrice, (vehiclePrice) => vehiclePrice.vehicle)
+  vehiclePrices: VehiclePrice[]
 }
