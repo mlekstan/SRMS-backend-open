@@ -15,6 +15,7 @@ import { CardsModule } from "../cards/cards.module";
     TypeOrmModule.forFeature([RentalSale, RentalSalePosition, RentedItem]),
     CardsModule  
   ],
+  exports: [RentalSalesService],
   controllers: [RentalSalesController],
   providers: [
     {

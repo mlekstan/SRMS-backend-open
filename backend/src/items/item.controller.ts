@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { AddItemDto } from "./dto/add-item.dto";
 import { ItemsService } from "./items.service";
 
@@ -23,6 +23,14 @@ export class ItemsController {
     return this.itemsService.findAll();
   }
 
+  @Get("count")
+  countItems(
+    @Query("subcategoryId", new ParseIntPipe({ optional: true })) subcategoryId: number,
+    @Query("free", new ParseBoolPipe({ optional: true })) free: boolean
+  ) {
+    return this.itemsService.countItems(subcategoryId, free);
+  }
+
   @Get(":id")
   findOne(@Param() params: { id: string }) {
     return this.itemsService.findOne(params);
@@ -36,4 +44,5 @@ export class ItemsController {
   ) {
     return this.itemsService.findOne(params, subcategoryId, free);
   }
+
 }

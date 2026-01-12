@@ -4,6 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Item } from "./item.entity";
 import { ItemIface } from "./interfaces/items.interface";
 import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
+import { RentalSalesService } from "src/rentalSale/rentalSales.service";
 
 
 
@@ -11,17 +12,19 @@ import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
 export class ItemsService {
   private itemsRepository: Repository<Item>;
   private rentedItemsRepository: Repository<RentedItem>;
+  private rentalSalesService: RentalSalesService;
 
   constructor(
     @InjectRepository(Item) itemsRepository: Repository<Item>,
-    @InjectRepository(RentedItem) rentedItemsRepository: Repository<RentedItem>
+    @InjectRepository(RentedItem) rentedItemsRepository: Repository<RentedItem>,
+    rentalSalesService: RentalSalesService
   ) {
     this.itemsRepository = itemsRepository;
     this.rentedItemsRepository = rentedItemsRepository;
+    this.rentalSalesService = rentalSalesService;
   }
 
   async add(item: ItemIface) {
-    console.log(item)
     try {
       const { basicData, saleData } = item;
 
@@ -169,4 +172,23 @@ export class ItemsService {
 
     return (rentedItem) ? false : true;
   }
+
+  async countItems(subcategoryId: number, free: boolean) {
+    const where = subcategoryId ? { subcategory: { id: subcategoryId } } : {}
+
+    if (free === false)
+      return this.rentalSalesService.countFreeItems(subcategoryId, free);
+
+    const itemsCount = await this.itemsRepository.count({
+      relations: {
+        subcategory: true
+      },
+      where,
+    });
+    if (free === true)
+      return this.rentalSalesService.countFreeItems(subcategoryId, free, itemsCount);
+
+    return { count: itemsCount };
+  }
+
 }
