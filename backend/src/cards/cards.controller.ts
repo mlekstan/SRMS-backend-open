@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseBoolPipe, Post, Put, Query } from "@nestjs/common";
 import { AddCardDto } from "./dto/add-card.dto";
 import { CardsService } from "./cards.service";
 
@@ -18,8 +18,10 @@ export class CardsController {
   }
 
   @Get()
-  findAll(@Query() query: any) {
-    return this.cardsService.findAll(query);
+  findAll(
+    @Query("issued", ParseBoolPipe) issued: boolean) {
+    console.log("iss", issued)
+    return this.cardsService.findAll(issued);
   }
 
   @Get(":id")

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { IsNull, Not, Repository } from "typeorm";
 import { Card } from "./card.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CardIface } from "./interfaces/card.interface";
@@ -40,9 +40,9 @@ export class CardsService {
     return await this.cardsRepository.save(cardRow);
   }
 
-  async findAll(query: any) {
-    if (query.active !== undefined) { 
-      const activeCards = await this.cardsRepository
+  async findAll(issued: boolean) {
+    if (issued === false) { 
+      const unissuedCards = await this.cardsRepository
         .createQueryBuilder("card")
         .where((qb) => {
           const subQuery = qb.subQuery()
@@ -56,7 +56,17 @@ export class CardsService {
         })
         .getMany();
 
-      return activeCards;
+      return unissuedCards;
+    }
+
+    if (issued === true) {
+      const issuedCards = await this.cardsRepository
+        .createQueryBuilder("card")
+        .innerJoin("card.cardClients", "card_client")
+        .where("card_client.date_to IS NULL")
+        .getMany();
+      
+      return issuedCards;
     }
 
     const allCards = this.cardsRepository.find();
