@@ -3,10 +3,18 @@ import { CategoryPriceList } from "./category-price-list.class";
 import { VehiclePriceListServcie } from "./vehicle-price-list.service";
 import { PricesIface } from "./interfaces/prices.interface";
 
+export type CalculatePriceArgs = {
+  categoryId: number; 
+  subcategoryId: number; 
+  speed: number | null; 
+  rentalLength: string; 
+  numberOfItems: number;
+};
 
-@Injectable({
-  
-})
+export type CalculateChargeArgs = CalculatePriceArgs & { discount: string };
+
+
+@Injectable()
 export class PriceListService {
   private services: CategoryPriceList[] = [];
   
@@ -23,7 +31,6 @@ export class PriceListService {
     return result;
   }
 
-
   async findAll(categoryId: number, subcategoryId: number) {
     const service = this.selectSevice(categoryId);
     if (!service)
@@ -31,6 +38,26 @@ export class PriceListService {
 
     const prices = await service.findAll(subcategoryId);
     return prices;
+  }
+
+  async calculatePrice(args: CalculatePriceArgs) {
+    const { categoryId, ...rest } = args;
+    const service = this.selectSevice(categoryId);
+    if (!service)
+      throw new NotFoundException("Price list for this category do not exist"); 
+
+    const result = await service.calculatePrice(rest);
+    return result;
+  }
+
+  async calculateCharge(args: CalculateChargeArgs) {
+    const { categoryId, ...rest } = args;
+    const service = this.selectSevice(categoryId);
+    if (!service)
+      throw new NotFoundException("Price list for this category do not exist");
+
+    const result = await service.calculateCharge(rest);
+    return result;
   }
 
   selectSevice(categoryId: number) {

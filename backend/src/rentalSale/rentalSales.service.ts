@@ -1,25 +1,34 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { RentalSale } from "./entities/rentalSale.entity";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { RentalSalePosition } from "./entities/rentalSalePosition.entity";
 import { RentedItem } from "./entities/rentedItem.entity";
+import { RentalSaleIface } from "./interfaces/rentalSale.interface";
+import { User } from "src/users/user.entity";
+import { PriceListService } from "src/price-list/price-list.service";
 
 
 @Injectable()
-export class RentalSalesService {
+export class RentalSalesService { 
+  private dataSource: DataSource;
   private rentalSaleRepository: Repository<RentalSale>; 
   private rentalSalePositionRepository: Repository<RentalSalePosition>;
   private rentedItemRepository: Repository<RentedItem>;
+  private priceListService: PriceListService;
 
   constructor(
+    @InjectDataSource() dataSource: DataSource, 
     @InjectRepository(RentalSale) rentalSaleRepository: Repository<RentalSale>, 
     @InjectRepository(RentalSalePosition) rentalSalePositionRepository: Repository<RentalSalePosition>, 
-    @InjectRepository(RentedItem) rentedItemRepository: Repository<RentedItem>
-  ) {
+    @InjectRepository(RentedItem) rentedItemRepository: Repository<RentedItem>, 
+    priceListService: PriceListService
+  ) { 
+    this.dataSource = dataSource;
     this.rentalSaleRepository = rentalSaleRepository;
     this.rentalSalePositionRepository = rentalSalePositionRepository;
     this.rentedItemRepository = rentedItemRepository;
+    this.priceListService = priceListService;
   }
 
   async filterByCardId(id: number) {
@@ -63,5 +72,75 @@ export class RentalSalesService {
       count = soldItemsCount + rentedItemsCount;
 
     return { count };
+  }
+
+  async add(rentalSale: RentalSaleIface, userId: string) {
+
+    return this.dataSource.transaction(async (manager) => {
+      const user = await manager.findOneOrFail(User, {
+        relations: {
+          branch: true
+        }, 
+        where: {
+          id: Number(userId)
+        }, 
+        select: {
+          branch: {
+            id: true
+          }
+        }
+      });
+
+      console.log("user", user)
+
+      let priceSum = 0;
+      let chargeSum = 0;
+      let rentalSaleRow = manager.create(RentalSale, {
+        saleDate: new Date(),
+        actionRequired: true,
+        chargePredicted: String(priceSum),
+        charge: String(chargeSum),
+        surcharge: "0", 
+        user: { id: Number(userId) }, 
+        card: { id: rentalSale.cardId }, 
+        branch: { id: user.branch.id }, 
+      });
+
+      rentalSaleRow = await manager.save(rentalSaleRow);
+      
+      const rentalSalePostionRows = await Promise.all(rentalSale.positions.map(async (p) => {
+        const { price, charge } = await this.priceListService.calculateCharge({
+          categoryId: rentalSale.categoryId, 
+          subcategoryId: p.subcategoryId, 
+          speed: p.speed, 
+          rentalLength: p.rentalLength, 
+          numberOfItems: p.numberOfItems, 
+          discount: p.discount
+        });
+
+        const rentalSalePositionRow = manager.create(RentalSalePosition, {
+          numberOfItems: p.numberOfItems, 
+          rentalLength: p.rentalLength, 
+          charge: String(charge), 
+          surcharge: "0", 
+          rentalSale: rentalSaleRow, 
+          subcategory: { id: p.subcategoryId }
+        });
+
+        priceSum += price;
+        chargeSum += charge;
+
+        return rentalSalePositionRow;
+      }));
+
+      rentalSaleRow.chargePredicted = String(priceSum);
+      rentalSaleRow.charge = String(chargeSum);
+
+      return { 
+        rentalSale: await manager.save(rentalSaleRow), 
+        rentalSalePositions: await manager.save(rentalSalePostionRows)
+      };
+
+    });
   }
 }

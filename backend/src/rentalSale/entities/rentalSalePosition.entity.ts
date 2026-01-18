@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { RentalSale } from "./rentalSale.entity";
 import { Subcategory } from "../../subcategories/subcategory.entity";
 import { RentedItem } from "./rentedItem.entity";
+import { IntervalTransformer } from "src/price-list/entities/IntervalTransformer";
 
 
 @Entity({ name: "rental_sale_position" })
@@ -12,14 +13,14 @@ export class RentalSalePosition {
   @Column({ type: "integer", name: "number_of_items" })
   numberOfItems: number
 
-  @Column({ type: "interval", name: "rental_length" })
+  @Column({ type: "interval", name: "rental_length", transformer: new IntervalTransformer() })
   rentalLength: string
 
   @Column({ type: "numeric", precision: 9, scale: 2, name: "charge" })
-  charge: number
+  charge: string
 
   @Column({ type: "numeric", precision: 9, scale: 2, name: "surcharge" })
-  surcharge: number
+  surcharge: string
 
   @ManyToOne(() => RentalSale, (rentalSale) => rentalSale.rentalSalePositions)
   @JoinColumn({ name: "rental_sale_id", referencedColumnName: "id" })

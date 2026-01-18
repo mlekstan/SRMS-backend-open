@@ -8,12 +8,14 @@ import { Module } from "@nestjs/common";
 import { RentalSalesController } from "./rentalSales.controller";
 import { RentalSalesService } from "./rentalSales.service";
 import { CardsModule } from "../cards/cards.module";
+import { PriceListModule } from "src/price-list/price-list.module";
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([RentalSale, RentalSalePosition, RentedItem]),
-    CardsModule  
+    CardsModule, 
+    PriceListModule
   ],
   exports: [RentalSalesService],
   controllers: [RentalSalesController],

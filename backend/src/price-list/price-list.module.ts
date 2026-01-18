@@ -10,6 +10,7 @@ import { VehiclePriceListServcie } from "./vehicle-price-list.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([VehiclePrice])],
+  exports: [PriceListService], 
   controllers: [PriceListController],
   providers: [
     {

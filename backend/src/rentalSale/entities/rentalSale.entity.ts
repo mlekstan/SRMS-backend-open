@@ -17,13 +17,13 @@ export class RentalSale {
   actionRequired: boolean
 
   @Column({ type: "numeric", precision: 9, scale: 2, name: "charge_predicted" })
-  chargePredicted: number
+  chargePredicted: string
 
   @Column({ type: "numeric", precision: 9, scale: 2, name: "charge" })
-  charge: number
+  charge: string
 
   @Column({ type: "numeric", precision: 9, scale: 2, name: "surcharge" })
-  surcharge: number
+  surcharge: string
 
   @ManyToOne(() => User, (user) => user.rentalSales)
   @JoinColumn({ name: "user_id", referencedColumnName: "id" })

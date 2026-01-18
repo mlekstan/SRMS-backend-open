@@ -1,9 +1,10 @@
 import { Vehicle } from "src/subcategories/vehicle.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { IntervalTransformer } from "./IntervalTransformer";
 
 
 @Entity({ name: "vehicle_max_speed_price" })
+@Unique(["timeUnit", "vehicle"])
 export class VehiclePrice {
   @PrimaryGeneratedColumn()
   id: number
