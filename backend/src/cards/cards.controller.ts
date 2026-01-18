@@ -18,9 +18,8 @@ export class CardsController {
   }
 
   @Get()
-  findAll(
-    @Query("issued", ParseBoolPipe) issued: boolean) {
-    console.log("iss", issued)
+  async findAll(
+    @Query("issued", new ParseBoolPipe({ optional: true })) issued: boolean) {
     return this.cardsService.findAll(issued);
   }
 
