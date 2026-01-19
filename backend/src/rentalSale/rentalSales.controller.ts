@@ -3,6 +3,7 @@ import { RentalSalesService } from "./rentalSales.service";
 import { CardsService } from "../cards/cards.service";
 import { AddRentalSaleDto } from "./dto/add-rentalSale.dto";
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
+import { AddRentedItems } from "./dto/add-rentedItems.dto";
 
 
 
@@ -23,6 +24,12 @@ export class RentalSalesController {
   @Post()
   add(@Body() addRentalSaleDto: AddRentalSaleDto, @Req() req) {
     return this.rentalSalesService.add(addRentalSaleDto, req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post("rentedItems")
+  addRentedItems(@Body() addRentedItemsDto: AddRentedItems, @Req() req) {
+    return this.rentalSalesService.addRentedItems(addRentedItemsDto, req.user.id);
   }
 
 }

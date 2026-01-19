@@ -7,6 +7,8 @@ import { RentedItem } from "./entities/rentedItem.entity";
 import { RentalSaleIface } from "./interfaces/rentalSale.interface";
 import { User } from "src/users/user.entity";
 import { PriceListService } from "src/price-list/price-list.service";
+import { RentedItemsIface } from "./interfaces/rentedItems.interface";
+import { transformInterval } from "src/helper-functions/transformInterval";
 
 
 @Injectable()
@@ -142,5 +144,31 @@ export class RentalSalesService {
       };
 
     });
+  }
+
+  async addRentedItems(rentedItems: RentedItemsIface, userId: string) {
+    const { positions } = rentedItems;
+    const start = new Date();
+
+    const rentedItemsRows = await Promise.all(positions.map(async p => {
+      const { rentalLength } = await this.rentalSalePositionRepository.findOneOrFail({
+        where: {
+          id: p.rentalSalePositionId
+        }
+      });
+      const endPredicted = new Date(start.getTime() + (transformInterval(rentalLength) * 60 * 1000));
+
+      const rentedItemRow = this.rentedItemRepository.create({
+        start: start.toISOString(),
+        endPredicted: endPredicted.toISOString(),
+        rentalSalePosition: { id: p.rentalSalePositionId }, 
+        startUser: { id: Number(userId) }, 
+        item: { id: p.itemId }, 
+      })
+
+      return rentedItemRow;
+    }));
+
+    return await this.rentedItemRepository.save(rentedItemsRows);
   }
 }

@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CategoryPriceList } from "./category-price-list.class";
 import { PricesIface } from "./interfaces/prices.interface";
 import { CalculateChargeArgs, CalculatePriceArgs } from "./price-list.service";
+import { transformInterval } from "src/helper-functions/transformInterval";
 
 
 @Injectable()
@@ -68,7 +69,7 @@ export class VehiclePriceListServcie extends CategoryPriceList {
     }
 
     const timesPrices = await query.getRawMany();
-    const rentalLengthMin = super.transformInterval(rentalLength);
+    const rentalLengthMin = transformInterval(rentalLength);
 
     const price = this.complementMethod(timesPrices, rentalLengthMin) * numberOfItems;
     const floor = Math.floor(price);
