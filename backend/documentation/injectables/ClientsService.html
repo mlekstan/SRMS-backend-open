@@ -752,7 +752,7 @@ export class ClientsService {
   async updateOne(params: { id: string }, client: UpdateClientIface) {
     const { cardData, personalData, residenceData, contactData } &#x3D; client;
 
-    console.log(&quot;Card data:&quot;, cardData.cards);
+    console.log(&quot;Card data:&quot;, cardData);
     console.log(&quot;Personal data:&quot;, personalData);
     console.log(&quot;Residence data:&quot;, residenceData);
     console.log(&quot;Contact data:&quot;, contactData);
@@ -848,12 +848,14 @@ export class ClientsService {
 
   async findOne(params: { id: string }) {
     
-    return await this.clientsRepository.createQueryBuilder(&quot;client&quot;)
-      .leftJoinAndSelect(&quot;client.clientCards&quot;, &quot;cardClient&quot;)
+    const result &#x3D; await this.clientsRepository.createQueryBuilder(&quot;client&quot;)
+      .leftJoinAndSelect(&quot;client.clientCards&quot;, &quot;cardClient&quot;, &quot;cardClient.dateTo IS NULL&quot;)
       .leftJoinAndSelect(&quot;cardClient.card&quot;, &quot;card&quot;)
       .where(&quot;client.id &#x3D; :id&quot;, { id: Number(params.id) })
-      .andWhere(&quot;cardClient.dateTo IS NULL&quot;)
+      // .andWhere(&quot;cardClient.dateTo IS NULL&quot;)
       .getOne()
+
+      return result;
   }
 }</code></pre>
     </div>

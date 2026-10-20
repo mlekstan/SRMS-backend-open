@@ -247,7 +247,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/exception-filters/query-exception.filter.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/exception-filters/query-exception.filter.ts:9</a></div>
                         </td>
                     </tr>
 
@@ -281,8 +281,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/exception-filters/query-exception.filter.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/exception-filters/query-exception.filter.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -350,9 +350,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from &quot;@nestjs/common&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from &quot;@nestjs/common&quot;;
 import { Request, Response } from &quot;express&quot;;
 import { QueryFailedError } from &quot;typeorm&quot;;
+
 
 @Catch(QueryFailedError)
 export class QueryExceptionFilter implements ExceptionFilter {
@@ -398,7 +399,6 @@ export class QueryExceptionFilter implements ExceptionFilter {
         detail: &#x60;${info} -&gt; ${detail}&#x60;,
         path: request.url,
       })
-     
   }
 }</code></pre>
     </div>

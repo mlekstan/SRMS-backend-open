@@ -22,29 +22,45 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_ItemsModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="171,-70 171,-195 325,-195 325,-70 171,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="96,-70 96,-195 400,-195 400,-70 96,-70"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_ItemsModule_imports</title>
+<polygon fill="none" stroke="black" points="250,-78 250,-130 392,-130 392,-78 250,-78"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_ItemsModule_providers</title>
-<polygon fill="none" stroke="black" points="179,-78 179,-130 317,-130 317,-78 179,-78"/>
+<polygon fill="none" stroke="black" points="104,-78 104,-130 242,-130 242,-78 104,-78"/>
 </g>
-<!-- ItemsService -->
+<!-- RentalSalesModule -->
 <g id="node1" class="node">
-<title>ItemsService</title>
-<ellipse fill="#fdb462" stroke="black" cx="248" cy="-104" rx="61.39" ry="18"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">ItemsService</text>
+<title>RentalSalesModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="383.64,-122 380.64,-126 359.64,-126 356.64,-122 258.36,-122 258.36,-86 383.64,-86 383.64,-122"/>
+<text text-anchor="middle" x="321" y="-99.8" font-family="Times,serif" font-size="14.00">RentalSalesModule</text>
 </g>
 <!-- ItemsModule -->
 <g id="node2" class="node">
 <title>ItemsModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="293.15,-187 290.15,-191 269.15,-191 266.15,-187 202.85,-187 202.85,-151 293.15,-151 293.15,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">ItemsModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="292.15,-187 289.15,-191 268.15,-191 265.15,-187 201.85,-187 201.85,-151 292.15,-151 292.15,-187"/>
+<text text-anchor="middle" x="247" y="-164.8" font-family="Times,serif" font-size="14.00">ItemsModule</text>
+</g>
+<!-- RentalSalesModule&#45;&gt;ItemsModule -->
+<g id="edge1" class="edge">
+<title>RentalSalesModule&#45;&gt;ItemsModule</title>
+<path fill="none" stroke="black" d="M275.25,-122.11C275.25,-122.11 275.25,-140.99 275.25,-140.99"/>
+<polygon fill="black" stroke="black" points="271.75,-140.99 275.25,-150.99 278.75,-140.99 271.75,-140.99"/>
+</g>
+<!-- ItemsService -->
+<g id="node3" class="node">
+<title>ItemsService</title>
+<ellipse fill="#fdb462" stroke="black" cx="173" cy="-104" rx="61.39" ry="18"/>
+<text text-anchor="middle" x="173" y="-99.8" font-family="Times,serif" font-size="14.00">ItemsService</text>
 </g>
 <!-- ItemsService&#45;&gt;ItemsModule -->
-<g id="edge1" class="edge">
+<g id="edge2" class="edge">
 <title>ItemsService&#45;&gt;ItemsModule</title>
-<path fill="none" stroke="black" d="M248,-122.11C248,-122.11 248,-140.99 248,-140.99"/>
-<polygon fill="black" stroke="black" points="244.5,-140.99 248,-150.99 251.5,-140.99 244.5,-140.99"/>
+<path fill="none" stroke="black" d="M218.06,-116.53C218.06,-116.53 218.06,-140.85 218.06,-140.85"/>
+<polygon fill="black" stroke="black" points="214.56,-140.85 218.06,-150.85 221.56,-140.85 214.56,-140.85"/>
 </g>
 </g>
 </svg>

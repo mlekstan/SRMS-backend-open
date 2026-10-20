@@ -219,14 +219,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="10"
-                                    class="link-to-prism">src/branches/branches.controller.ts:10</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="15"
+                                    class="link-to-prism">src/branches/branches.controller.ts:15</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Create new branch</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -256,7 +258,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                            <b>Returns : </b>        <code><a href="../entitys/Branch.html" target="_self" >Promise&lt;Branch&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -295,14 +297,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="20"
-                                    class="link-to-prism">src/branches/branches.controller.ts:20</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/branches/branches.controller.ts:36</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Find all branches</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
@@ -327,7 +331,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOne(params: literal type)</code>
+                    <code>findOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -341,14 +345,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/branches/branches.controller.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/branches/branches.controller.ts:45</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Find one branch</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -363,9 +369,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>params</td>
+                                                <td>id</td>
                                             <td>
-                                                        <code>literal type</code>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                             </td>
 
                                             <td>
@@ -403,7 +409,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateOne(params: literal type, updateBranchDto: <a href="../classes/AddBranchDto.html" target="_self">AddBranchDto</a>)</code>
+                    <code>updateOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, updateBranchDto: <a href="../classes/AddBranchDto.html" target="_self">AddBranchDto</a>)</code>
                 </td>
             </tr>
 
@@ -417,14 +423,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/branches/branches.controller.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="24"
+                                    class="link-to-prism">src/branches/branches.controller.ts:24</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Update exsisting branch</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -439,9 +447,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>params</td>
+                                                <td>id</td>
                                             <td>
-                                                        <code>literal type</code>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                             </td>
 
                                             <td>
@@ -480,34 +488,56 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Body, Controller, Get, Param, Post, Put } from &quot;@nestjs/common&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from &quot;@nestjs/common&quot;;
 import { AddBranchDto } from &quot;./dto/add-branch.dto&quot;;
 import { BranchesService } from &quot;./branches.service&quot;;
+import { Branch } from &quot;./branch.entity&quot;;
 
 @Controller(&quot;branches&quot;)
 export class BranchesController {
   constructor(private branchesService: BranchesService) {}
 
+  /**
+   * Create new branch
+   * @remarks This operation allows you to create new company branch.
+   */
   @Post()
-  add(@Body() addBranchDto: AddBranchDto) {
+  add(@Body() addBranchDto: AddBranchDto): Promise&lt;Branch&gt; {
     return this.branchesService.add(addBranchDto);
   }
 
+  /**
+   * Update exsisting branch
+   * @remarks This operation allows you to update exsisting company branch.
+   */
   @Put(&quot;:id&quot;)
-  updateOne(@Param() params: { id: string }, @Body() updateBranchDto: AddBranchDto) {
-    return this.branchesService.updateOne(params, updateBranchDto);
+  updateOne(
+    @Param(&quot;id&quot;, ParseIntPipe) id: number, 
+    @Body() updateBranchDto: AddBranchDto
+  ) {
+    return this.branchesService.updateOne(id, updateBranchDto);
   }
 
+  /**
+   * Find all branches
+   * @remarks This operation allows you to get all exsisting company branches.
+   */
   @Get()
   findAll() {
     return this.branchesService.findAll();
   }
 
+  /**
+   * Find one branch
+   * @remarks This operation allows you to get one company branch by ID.
+   */
   @Get(&quot;:id&quot;)
-  findOne(@Param() params: { id: string }) {
-    return this.branchesService.findOne(params);
+  findOne(@Param(&quot;id&quot;, ParseIntPipe) id: number) {
+    return this.branchesService.findOne(id);
   }
-}</code></pre>
+}
+
+</code></pre>
     </div>
 </div>
 

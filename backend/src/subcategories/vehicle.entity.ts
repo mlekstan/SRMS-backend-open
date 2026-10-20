@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Check, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Subcategory } from "./subcategory.entity";
 import { DriveType } from "../driveTypes/driveType.entity";
 import { ElectricVehicle } from "./electricVehicle.entity";
@@ -6,6 +6,7 @@ import { VehiclePrice } from "src/price-list/entities/vehicle-price.entity";
 
 
 @Entity({ name: "vehicle" })
+@Check(`"curb_weight" >= 1 AND "max_load" >= 1 AND "min_age" >= 0 AND "max_age" >= 0 AND "max_age" >= "min_age"`)
 export class Vehicle {
   @PrimaryColumn()
   id: number
@@ -22,11 +23,16 @@ export class Vehicle {
   @Column({ type: "smallint", name: "max_age", nullable: true })
   maxAge: number
 
-  @OneToOne(() => Subcategory, (subcategory) => subcategory.vehicle)
+  @OneToOne(() => Subcategory, (subcategory) => subcategory.vehicle, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn({ name: "id", referencedColumnName: "id" })
   subcategory: Subcategory
 
-  @ManyToOne(() => DriveType, (driveType) => driveType.vehicles)
+  @ManyToOne(() => DriveType, (driveType) => driveType.vehicles, {
+    onDelete: "SET NULL", 
+    nullable: true
+  })
   @JoinColumn({ name: "drive_type_id", referencedColumnName: "id" })
   driveType: DriveType
 

@@ -250,7 +250,7 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ManyToOne(undefined, card &#x3D;&gt; card.clientCards, {nullable: true})<br />@JoinColumn({name: &#x27;client_id&#x27;, referencedColumnName: &#x27;id&#x27;})<br />
+                            @ManyToOne(undefined, client &#x3D;&gt; client.clientCards, {nullable: true})<br />@JoinColumn({name: &#x27;client_id&#x27;, referencedColumnName: &#x27;id&#x27;})<br />
                         </code>
                     </td>
                 </tr>
@@ -387,12 +387,12 @@ export class CardClient {
   id: number
 
   @ManyToOne(() &#x3D;&gt; Card, (card) &#x3D;&gt; card.cardClients)
-  @JoinColumn({name: &quot;card_id&quot;, referencedColumnName: &quot;id&quot;})
+  @JoinColumn({ name: &quot;card_id&quot;, referencedColumnName: &quot;id&quot; })
   card: Card
 
   
-  @ManyToOne(() &#x3D;&gt; Client, (card) &#x3D;&gt; card.clientCards, { nullable: true })
-  @JoinColumn({name: &quot;client_id&quot;, referencedColumnName: &quot;id&quot;})
+  @ManyToOne(() &#x3D;&gt; Client, (client) &#x3D;&gt; client.clientCards, { nullable: true })
+  @JoinColumn({ name: &quot;client_id&quot;, referencedColumnName: &quot;id&quot; })
   client: Client
 
   @Column({ type: &quot;timestamp&quot;, name: &quot;date_from&quot; })

@@ -192,16 +192,22 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>literal type</code>
+                        <i>Type : </i>        <code><a href="../classes/BranchDataDto.html" target="_self" >BranchDataDto</a></code>
 
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="2" class="link-to-prism">src/branches/dto/add-branch.dto.ts:2</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/branches/dto/add-branch.dto.ts:5</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Branch data</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -217,16 +223,29 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class AddBranchDto {
-  branchData: {
-    name: string,
-    country: string,
-    city: string,
-    street: string,
-    streetNumber: number,
-    flatNumber: number,
-    zipCode: string
-  }
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &quot;@nestjs/swagger&quot;;
+
+export class AddBranchDto {
+  /** Branch data*/
+  branchData: BranchDataDto
+}
+
+class BranchDataDto {
+  
+  @ApiProperty({ description: &quot;Branch name&quot;, example: &quot;HEXAL X Kraków&quot; })
+  name: string;
+  /**Country @example Poland */
+  country: string;
+  /**City @example Kraków */
+  city: string;
+  /**Street @example Czarnowiejska */
+  street: string;
+  /**Street number @example 20 */
+  streetNumber: number;
+  /**Flat number @example 21 */
+  flatNumber: number;
+  /**Zip code @example 30-072 */
+  zipCode: string;
 }</code></pre>
     </div>
 </div>

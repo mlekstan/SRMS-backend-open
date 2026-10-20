@@ -9,11 +9,12 @@ import { RentalSalesController } from "./rentalSales.controller";
 import { RentalSalesService } from "./rentalSales.service";
 import { CardsModule } from "../cards/cards.module";
 import { PriceListModule } from "src/price-list/price-list.module";
+import { Item } from "src/items/item.entity";
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([RentalSale, RentalSalePosition, RentedItem]),
+    TypeOrmModule.forFeature([RentalSale, RentalSalePosition, RentedItem, Item]),
     CardsModule, 
     PriceListModule
   ],

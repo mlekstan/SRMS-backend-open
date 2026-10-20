@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ClientsModule } from './clients/clients.module';
 import { CardsModule } from './cards/cards.module';
 import { ItemsModule } from './items/items.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Client } from './clients/client.entity';
 import { Card } from './cards/card.entity';
@@ -29,18 +29,26 @@ import { RentedItem } from './rentalSale/entities/rentedItem.entity';
 import { RentalSalesModule } from './rentalSale/rentalSales.module';
 import { VehiclePrice } from './price-list/entities/vehicle-price.entity';
 import { PriceListModule } from './price-list/price-list.module';
+import { ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "admin",
-      password: "admin",
-      database: "srms-db",
-      entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, DriveType, ElectricVehicle, Branch, Item, User, RentalSale, RentalSalePosition, RentedItem, VehiclePrice],
-      synchronize: false
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
+        type: configService.get<string>("DB_TYPE", "postgres") as "postgres",
+        host: configService.get<string>("DB_HOST_NAME", "localhost"),
+        port: configService.get<number>("DB_PORT", 5432),
+        username: configService.get<string>("DB_USERNAME", "admin"),
+        password: configService.get<string>("DB_PASSWORD", "admin"),
+        database: configService.get<string>("DB_NAME", "srms-db"),
+        entities: [Client, Card, CardClient, Category, DriveType, Subcategory, Vehicle, ElectricVehicle, Branch, Item, User, RentalSale, RentalSalePosition, RentedItem, VehiclePrice],
+        synchronize: true, 
+      }),
+      inject: [ConfigService]
     }),
     ClientsModule, 
     CardsModule,
@@ -52,7 +60,7 @@ import { PriceListModule } from './price-list/price-list.module';
     UsersModule,
     AuthModule,
     RentalSalesModule,
-    PriceListModule
+    PriceListModule,
   ],
   controllers: [AppController],
   providers: [AppService],

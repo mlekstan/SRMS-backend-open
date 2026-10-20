@@ -7,7 +7,6 @@ import { RentedItem } from "../rentalSale/entities/rentedItem.entity";
 import { RentalSalesService } from "src/rentalSale/rentalSales.service";
 
 
-
 @Injectable()
 export class ItemsService {
   private itemsRepository: Repository<Item>;
@@ -25,6 +24,7 @@ export class ItemsService {
   }
 
   async add(item: ItemIface) {
+    
     try {
       const { basicData, saleData } = item;
 
@@ -32,14 +32,14 @@ export class ItemsService {
         name: basicData.name,
         shortName: basicData.shortName,
         barcode: basicData.barcode,
-        marketValue: basicData.marketValue,
+        marketValue: basicData.marketValue?.toString(),
         status: 0,
         
         subcategory: { id: basicData.subcategoryId },
         branch: { id: basicData.branchId },
         
         forSale: saleData.forSale,
-        sellPrice: saleData.sellPrice
+        sellPrice: saleData.sellPrice?.toString()
       });
       
       return await this.itemsRepository.save(itemRow)
@@ -58,7 +58,7 @@ export class ItemsService {
       name: basicData.name,
       shortName: basicData.shortName,
       barcode: basicData.barcode,
-      marketValue: basicData.marketValue,
+      marketValue: basicData.marketValue?.toString(),
       subcategory: {
         id: basicData.subcategoryId,
       },
@@ -66,7 +66,7 @@ export class ItemsService {
         id: basicData.branchId,
       },
       forSale: saleData.forSale,
-      sellPrice: saleData.sellPrice
+      sellPrice: saleData.sellPrice?.toString()
     });
 
     return await this.itemsRepository.save(itemRow);

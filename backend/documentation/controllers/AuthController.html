@@ -160,6 +160,8 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
                                 <a href="#login" >login</a>
                             </li>
                         </ul>
@@ -187,6 +189,8 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
                         <span ><b>login</b></span>
                         <a href="#login"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -203,20 +207,22 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@UseGuards(LocalAuthGuard)<br />@Post(&#x27;login&#x27;)<br /></code>
+                    <code>@ApiBody({type: LoginDto})<br />@UseGuards(LocalAuthGuard)<br />@Post(&#x27;login&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="12"
-                                    class="link-to-prism">src/auth/auth.controller.ts:12</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="20"
+                                    class="link-to-prism">src/auth/auth.controller.ts:20</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Login</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -246,7 +252,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                            <b>Returns : </b>    <code>unknown</code>
 
                         </div>
                             <div class="io-description">
@@ -264,16 +270,24 @@
 import { LocalAuthGuard } from &#x27;./guards/local-auth.guard&#x27;;
 import { AuthService } from &#x27;./auth.service&#x27;;
 import type { Request } from &#x27;express&#x27;;
+import { LoginResponseDto } from &#x27;./dto/login-response.dto&#x27;;
+import { ApiBody } from &#x27;@nestjs/swagger&#x27;;
+import { LoginDto } from &#x27;./dto/login.dto&#x27;;
 
 @Controller(&quot;auth&quot;)
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  /**
+   * Login 
+   * @remarks This operation allows you to log in to SRMS.
+   */
+  @ApiBody({ type: LoginDto })
   @UseGuards(LocalAuthGuard)
   @Post(&quot;login&quot;)
-  login(@Req() request: Request) {
-    const jwt &#x3D; this.authService.login(request.user);
-    return jwt;
+  async login(@Req() request: Request) {
+    const loginResult &#x3D; await this.authService.login(request.user);
+    return new LoginResponseDto(loginResult);
   }
 }
 </code></pre>

@@ -4,10 +4,10 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity({ name: "card" })
 export class Card {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("identity")
   id: number
 
-  @Column({ type: "char", length: 13, name: "barcode" })
+  @Column({ type: "char", length: 8, name: "barcode", unique: true })
   barcode: string
 
   @Column({ type: "boolean", name: "is_temp", nullable: true })

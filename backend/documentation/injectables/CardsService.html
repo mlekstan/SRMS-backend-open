@@ -338,7 +338,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findAll(query: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    <code>findAll(issued: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                 </td>
             </tr>
 
@@ -367,9 +367,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>query</td>
+                                                <td>issued</td>
                                             <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
                                             </td>
 
                                             <td>
@@ -414,8 +414,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="66"
-                                    class="link-to-prism">src/cards/cards.service.ts:66</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/cards/cards.service.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -483,8 +483,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="76"
-                                    class="link-to-prism">src/cards/cards.service.ts:76</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/cards/cards.service.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -651,7 +651,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@nestjs/common&quot;;
-import { Repository } from &quot;typeorm&quot;;
+import { IsNull, Not, Repository } from &quot;typeorm&quot;;
 import { Card } from &quot;./card.entity&quot;;
 import { InjectRepository } from &quot;@nestjs/typeorm&quot;;
 import { CardIface } from &quot;./interfaces/card.interface&quot;;
@@ -692,9 +692,9 @@ export class CardsService {
     return await this.cardsRepository.save(cardRow);
   }
 
-  async findAll(query: any) {
-    if (query.active !&#x3D;&#x3D; undefined) { 
-      const activeCards &#x3D; await this.cardsRepository
+  async findAll(issued: boolean) {
+    if (issued &#x3D;&#x3D;&#x3D; false) { 
+      const unissuedCards &#x3D; await this.cardsRepository
         .createQueryBuilder(&quot;card&quot;)
         .where((qb) &#x3D;&gt; {
           const subQuery &#x3D; qb.subQuery()
@@ -708,7 +708,17 @@ export class CardsService {
         })
         .getMany();
 
-      return activeCards;
+      return unissuedCards;
+    }
+
+    if (issued &#x3D;&#x3D;&#x3D; true) {
+      const issuedCards &#x3D; await this.cardsRepository
+        .createQueryBuilder(&quot;card&quot;)
+        .innerJoin(&quot;card.cardClients&quot;, &quot;card_client&quot;)
+        .where(&quot;card_client.date_to IS NULL&quot;)
+        .getMany();
+      
+      return issuedCards;
     }
 
     const allCards &#x3D; this.cardsRepository.find();

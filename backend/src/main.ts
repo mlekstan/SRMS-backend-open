@@ -9,8 +9,8 @@ import * as https from 'https';
 import { createDocument } from './swagger/swagger';
 
 const httpsOptions = {
-  key: fs.readFileSync("e:\\Studia_Teleinformatyka_2022_2023\\Praca_inzynierska\\Cert\\localhost-key.pem"),
-  cert: fs.readFileSync("e:\\Studia_Teleinformatyka_2022_2023\\Praca_inzynierska\\Cert\\localhost.pem")
+  key: fs.readFileSync(process.env.SSL_KEY_PATH || "..\\..\\cert\\localhost-key.pem"),
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH || "..\\..\\cert\\localhost.pem")
 }
 
 async function bootstrap() {

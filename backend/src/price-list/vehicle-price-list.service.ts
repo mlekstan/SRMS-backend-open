@@ -81,30 +81,30 @@ export class VehiclePriceListServcie extends CategoryPriceList {
   complementMethod(timesPrices: { price: string, minutes: string }[], timeMinutes: number) {
     let charge = 0;
     let countdown = timeMinutes;
-    let i = 0;
-    for (const tp of timesPrices) {
-      const q = Math.floor(countdown / Number(tp.minutes));
+
+    for (let i = 0; i < timesPrices.length; i++) {
+      const basePrice = Math.round(Number(timesPrices[i].price) * 100);
+      const baseTime = Number(timesPrices[i].minutes);
+      
+      const q = Math.floor(countdown / baseTime);
       if (q >= 1) {
-        charge += (q * Number(tp.price));
-        countdown -= (q * Number(tp.minutes));
-      } 
+        charge += (q * basePrice);
+        countdown -= (q * baseTime);
+      }
       if (timesPrices.length - 1 === i && countdown !== 0) {
-        charge += (countdown / Number(tp.minutes) * Number(tp.price));
+        charge += (countdown / baseTime * basePrice);
         countdown = 0;
       }
-      if (countdown === 0)
-        break;
-      
-      i++;
+      if (countdown === 0) break;
     }
 
-    return charge;
+    return Math.round(charge) / 100;
   }
 
   async calculateCharge(params: Omit<CalculateChargeArgs, "categoryId">) {
     const { discount, ...rest } = params;
     const price = (await this.calculatePrice(rest)).price;
-    const charge =  price - Number(discount);
+    const charge = price - Number(discount);
 
     return { price, charge };
   }

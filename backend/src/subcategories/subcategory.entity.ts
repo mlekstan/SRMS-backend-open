@@ -2,29 +2,27 @@ import { Category } from "../categories/category.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Vehicle } from "./vehicle.entity";
 import { Item } from "../items/item.entity";
-import { RentalSalePosition } from "../rentalSale/entities/rentalSalePosition.entity";
 
 
 @Entity({ name: "item_subcategory" })
 export class Subcategory {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("identity")
   id: number
 
-  @Column({ type: "varchar" , length: 255, name: "name" })
+  @Column({ type: "varchar", length: 255, name: "name", unique: true })
   name: string
 
   @OneToOne(() => Vehicle, (vehicle) => vehicle.subcategory)
   vehicle: Vehicle
 
-  @ManyToOne(() => Category, (category) => category.subcategories)
+  @ManyToOne(() => Category, (category) => category.subcategories, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn({ name: "item_category_id", referencedColumnName: "id" })
   category: Category
 
   @OneToMany(() => Item, (item) => item.subcategory)
   items: Item[]
-
-  @OneToMany(() => RentalSalePosition, (rentalSalePosition) => rentalSalePosition.subcategory)
-  rentalSalePositions: RentalSalePosition[]
 
 }
 

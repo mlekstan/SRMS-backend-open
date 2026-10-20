@@ -5,10 +5,10 @@ export class AddItemDto {
     branchId: number,
     name: string,
     shortName: string,
-    marketValue: number,
+    marketValue: number | null,
   }
   saleData: {
     forSale: boolean,
-    sellPrice: number,
+    sellPrice: number | null,
   }
 }

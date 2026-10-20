@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Check } from "typeorm";
 import { CardClient } from "./cardClient.entity";
 
 @Entity({ name: "client" })
+@Check(`"street_number" >= 0 AND "flat_number" >= 0`)
 export class Client {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("identity")
   id: number
 
   @Column({ type: "varchar", length: 40, name: "first_name" })
@@ -50,4 +51,5 @@ export class Client {
 
   @OneToMany(() => CardClient, (cardClient) => cardClient.client)
   clientCards: CardClient[]
+  
 }

@@ -1,15 +1,16 @@
 import { Item } from "../items/item.entity"
 import { RentalSale } from "../rentalSale/entities/rentalSale.entity"
 import { User } from "../users/user.entity"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Check, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity({ name: "branch" })
+@Check(`"street_number" >= 0`)
 export class Branch {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("identity")
   id: number
 
-  @Column({ type: "varchar", length: 255, name: "name" })
+  @Column({ type: "varchar", length: 255, name: "name", unique: true })
   name: string
 
   @Column({ type: "varchar", length: 60, name: "country" })
